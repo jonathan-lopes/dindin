@@ -1,0 +1,132 @@
+.App__main {
+  background-color: #fff;
+  border-radius: 60px 60px 0px 0px;
+  min-height: 100vh;
+  padding: 55px 30px 0px 100px;
+}
+
+.open-filters-button {
+  all: unset;
+  box-sizing: border-box;
+  text-align: center;
+  background: #fafafa;
+  box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  color: #000000;
+  padding: 8px 15px 8px 14px;
+  cursor: pointer;
+}
+
+.table {
+  width: 964px;
+  height: 327px;
+}
+
+.table-thead {
+  background: #fafafa;
+  box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px 27px 20px 27px;
+  font-weight: bold;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.table-head {
+  font-size: 14px;
+  line-height: 17px;
+  padding: 20px 170px 20px 27px;
+}
+
+.table-line {
+  font-size: 14px;
+  line-height: 17px;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 20px 0px 20px 27px;
+}
+
+.line-items__description {
+  width: 100px;
+}
+
+
+.App__table-td {
+  font-weight: bold;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  position: relative;
+}
+
+.App__table-td--in {
+  color: #7b61ff;
+}
+
+.container-confirm-delete {
+  background: #e4f2fd;
+  border-radius: 4px;
+  left: 75%;
+  width: 111px;
+  height: 46px;
+  padding: 7px 15px 10px 15px;
+  position: absolute;
+  z-index: 2;
+}
+
+.container-confirm-delete::before {
+  content: "";
+  position: absolute;
+  bottom: 1.9rem;
+  right: 50%;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-top: 20px solid #e4f2fd;
+  transform: rotate(180deg);
+}
+
+.container-confirm-delete-span {
+  font-weight: 300;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+  z-index: 3;
+}
+
+.container-btn {
+  width: 100%;
+}
+
+.btn-actions-confim-delete {
+  all: unset;
+  box-sizing: border-box;
+  width: 37px;
+  height: 15px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 9px;
+  line-height: 11px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.confim {
+  background: #3a9ff1;
+}
+
+.delete {
+  background: #ff576b;
+}
+
+#date,
+#week-day,
+#value-table {
+  cursor: pointer;
+}

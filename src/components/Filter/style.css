@@ -1,0 +1,96 @@
+.container-filters {
+  width: 959px;
+  height: 213px;
+  background: #fafafa;
+  box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 27px 26px 24px 38px;
+}
+
+.filter-title {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: #b9b9b9;
+}
+
+.week-day,
+.category {
+  width: 172px;
+  height: 141px;
+}
+
+.container-filter {
+  width: 172px;
+  height: 107px;
+}
+
+.container-chip {
+  all: unset;
+  box-sizing: border-box;
+  box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-size: 10px;
+  line-height: 12px;
+  min-width: 80px;
+  height: 20px;
+  padding: 4px 10px;
+  background: #fafafa;
+  color: #000000;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container-chip--active {
+  color: #ffffff;
+  background: #7b61ff;
+}
+
+.value-label {
+  font-size: 9px;
+  line-height: 11px;
+  color: #484848;
+}
+
+.value-input {
+  all: unset;
+  box-sizing: border-box;
+  background: #ffffff;
+  border: 1px solid #7b61ff;
+  box-sizing: border-box;
+  border-radius: 2px;
+  width: 65px;
+  height: 22px;
+  padding: 2px;
+}
+
+.btn-filter {
+  all: unset;
+  box-sizing: border-box;
+  width: 98px;
+  height: 30px;
+  box-shadow: 0px 2px 11px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  cursor: pointer;
+  margin-right: 20px;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 14px;
+  text-align: center;
+}
+
+.btn-clear-filters {
+  background: #fafafa;
+  color: #000000;
+}
+
+.btn-apply-filters {
+  background: linear-gradient(264.83deg, #3a9ff1 -3.28%, #05ede3 100%);
+  color: #ffffff;
+}
+
+.border {
+  border: 1px solid #eaeaea;
+}
