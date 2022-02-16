@@ -114,8 +114,8 @@ function Main() {
   const [toggleArrow, setToggleArrow] = useState(true);
   const [filterVisible, setFilterVisible] = useState(false);
 
-  const baseURL = "http://localhost:3333/transactions";
-
+  const baseURL = "https://api-finance-dindin.herokuapp.com/transactions";
+ 
   const operationType = useRef("");
 
   async function loadTransactions() {
