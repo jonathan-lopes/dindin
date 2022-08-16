@@ -3,7 +3,11 @@ import filterIcon from "../../assets/filter-icon.svg";
 import Chip from "../Chip";
 import defaultWeekDays from "./defaultWeekDays";
 import "./styles.css";
-import { getOnlySelectedCategories, getOnlySelectedWeekDay } from "./utils";
+import {
+  getOnlySelectedCategories,
+  getOnlySelectedWeekDay,
+  mergeNewAndOldCategs,
+} from "./utils";
 
 function Filters({ transactions, handleOrderTransactions, setReload, reload }) {
   const [open, setOpen] = useState(false);
@@ -14,28 +18,22 @@ function Filters({ transactions, handleOrderTransactions, setReload, reload }) {
   const [transactionsInFilter, setTransactionsInFilter] = useState([]);
 
   useEffect(() => {
-    const allCategories = [];
-
-    for (const transaction of transactionsInFilter) {
-      allCategories.push({ name: transaction.category, selected: false });
-    }
-
-    const categoriesWithoutDupplicatedItems = [];
-    const categIds = [];
-
-    for (const categ of allCategories) {
-      if (categIds.indexOf(categ.name) === -1) {
-        categIds.push(categ.name);
-        categoriesWithoutDupplicatedItems.push(categ);
-      }
-    }
-
-    setCategories(categoriesWithoutDupplicatedItems);
+    populateCategoriesInFilters();
+    // eslint-disable-next-line
   }, [transactionsInFilter]);
 
   useEffect(() => {
     loadTransactionsInFilter();
   }, [transactions]);
+
+  function populateCategoriesInFilters() {
+    const allCategs = mergeNewAndOldCategs(
+      transactionsInFilter,
+      categories
+    );
+
+    setCategories(allCategs);
+  }
 
   async function loadTransactionsInFilter() {
     const response = await fetch("http://localhost:3334/transactions");
@@ -82,47 +80,41 @@ function Filters({ transactions, handleOrderTransactions, setReload, reload }) {
     setReload(!reload);
   }
 
-  function handleApplyFilters() {
-    const selectedDays = getOnlySelectedWeekDay(weekDays);
-    const selectedCategs = getOnlySelectedCategories(categories);
+  function applyFiltersOnlyByValueMinAndMax(localTransactions) {
+    const transactionsFilteredByValue = [];
 
-    const localTransactions = [...transactionsInFilter];
-
-    if (selectedDays.length === 0 && selectedCategs.length === 0) {
-      const transactionsFilteredByValue = [];
-
-      for (const transaction of localTransactions) {
-        if (minValue && Number(transaction.value) < minValue) {
-          continue;
-        }
-
-        if (maxValue && Number(transaction.value) > maxValue) {
-          continue;
-        }
-
-        if (minValue && minValue <= Number(transaction.value)) {
-          transactionsFilteredByValue.push(transaction);
-        }
-
-        if (minValue && minValue >= Number(transaction.value)) {
-          transactionsFilteredByValue.push(transaction);
-        }
+    for (const transaction of localTransactions) {
+      if (minValue && Number(transaction.value) < minValue) {
+        continue;
       }
 
-      const idTransactions = [];
-      const transactionsRemoveDupplicateds = [];
-
-      for (const transaction of transactionsFilteredByValue) {
-        if (idTransactions.indexOf(transaction.id) === -1) {
-          idTransactions.push(transaction.id);
-          transactionsRemoveDupplicateds.push(transaction);
-        }
+      if (maxValue && Number(transaction.value) > maxValue) {
+        continue;
       }
 
-      handleOrderTransactions(transactionsRemoveDupplicateds);
-      return;
+      if (minValue && minValue <= Number(transaction.value)) {
+        transactionsFilteredByValue.push(transaction);
+      }
+
+      if (minValue && minValue >= Number(transaction.value)) {
+        transactionsFilteredByValue.push(transaction);
+      }
     }
 
+    const idTransactions = [];
+    const transactionsRemoveDupplicateds = [];
+
+    for (const transaction of transactionsFilteredByValue) {
+      if (idTransactions.indexOf(transaction.id) === -1) {
+        idTransactions.push(transaction.id);
+        transactionsRemoveDupplicateds.push(transaction);
+      }
+    }
+
+    handleOrderTransactions(transactionsRemoveDupplicateds);
+  }
+
+  function applyAllFilters(localTransactions, selectedDays, selectedCategs) {
     const filteredTransactions = [];
 
     for (const transaction of localTransactions) {
@@ -172,6 +164,30 @@ function Filters({ transactions, handleOrderTransactions, setReload, reload }) {
     }
 
     handleOrderTransactions(transactionsWithoutDuplicateds);
+  }
+
+  function handleApplyFilters() {
+    const selectedDays = getOnlySelectedWeekDay(weekDays);
+    const selectedCategs = getOnlySelectedCategories(categories);
+
+    if (
+      !selectedCategs.length &&
+      !selectedCategs.length &&
+      !minValue &&
+      !maxValue
+    ) {
+      setReload(!reload);
+      return;
+    }
+
+    const localTransactions = [...transactionsInFilter];
+
+    if (selectedDays.length === 0 && selectedCategs.length === 0) {
+      applyFiltersOnlyByValueMinAndMax(localTransactions);
+      return;
+    }
+
+    applyAllFilters(localTransactions, selectedDays, selectedCategs)
   }
 
   return (
